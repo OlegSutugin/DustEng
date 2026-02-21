@@ -1,0 +1,5 @@
+#pragma once
+#define Engine_VERSION_MAJOR @DustEngine_VERSION_MAJOR@
+#define Engine_VERSION_MINOR @DustEngine_VERSION_MINOR@
+#define Engine_VERSION_PATCH @DustEngine_VERSION_PATCH@
+#define Engine_VERSION_STRING "@DustEngine_VERSION@"
