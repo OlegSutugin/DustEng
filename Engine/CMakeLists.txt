@@ -38,4 +38,4 @@ set_target_properties(${PROJECT_NAME}Lib PROPERTIES FOLDER Engine)
 
 include(${CMAKE_SOURCE_DIR}/Automation/CMAKE/CMakeHelpers.cmake)
 create_ide_folders(ENGINE_SOURCES)
-setup_precompiled_headers(${PROJECT_NAME}Lib Source/pch.cpp Source/pch.h ${ENGINE_SOURCES})
+setup_precompiled_headers(${PROJECT_NAME}Lib Source/pch.cpp Source/pch.h "${ENGINE_SOURCES}")
