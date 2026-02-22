@@ -44,17 +44,17 @@ public:
 
     void log(LogVerbosity verbosity, const std::string& message) const
     {
-        if (verbosity == LogVerbosity::NoLogging) return;
+        const auto spdLevel = c_verbosityMap.at(verbosity);
 
-        const auto spdLevelIt = c_verbosityMap.find(verbosity);
-        if (spdLevelIt == c_verbosityMap.end()) return;
-
-        const auto spdLevel = spdLevelIt->second;
-        if (verbosity != Dust::LogVerbosity::Log)
+        if (verbosity != Dust::LogVerbosity::Log && m_consoleLogger->should_log(spdLevel))
         {
             m_consoleLogger->log(spdLevel, message);
         }
-        m_fileLogger->log(spdLevel, message);
+
+        if (m_fileLogger->should_log(spdLevel))
+        {
+            m_fileLogger->log(spdLevel, message);
+        }
 
         if (verbosity == Dust::LogVerbosity::Fatal)
         {
@@ -84,7 +84,15 @@ Log::Log() : m_pImpl(std::make_unique<Impl>())
 }
 Log::~Log() = default;
 
-void Log::log(const LogCategory& category, LogVerbosity verbosity, const std::string& message) const
+void Log::log(const LogCategory& category,  //
+    LogVerbosity verbosity,                 //
+    const std::string& message,             //
+    bool showLocation,                      //
+    const std::source_location location) const
 {
-    m_pImpl->log(verbosity, std::format("[{}] {}", category.name(), message));
+    const std::string fmtMsg = showLocation                                                                                               //
+                                   ? std::format("[{}] [{}:{}] {}", category.name(), location.function_name(), location.line(), message)  //
+                                   : std::format("[{}] {}", category.name(), message);
+
+    m_pImpl->log(verbosity, fmtMsg);
 }
