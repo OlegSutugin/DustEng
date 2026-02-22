@@ -31,9 +31,15 @@ if(MSVC)
     target_compile_options(${PROJECT_NAME}Lib PUBLIC /Zc:preprocessor)
 endif()
 
+#tests
+add_executable(${PROJECT_NAME}TestRunner Tests/LogConceptsTests.cpp)
+target_link_libraries(${PROJECT_NAME}TestRunner PUBLIC ${PROJECT_NAME}Lib)
+
 #add libraries
 find_package(spdlog REQUIRED)
 target_link_libraries(${PROJECT_NAME}Lib PUBLIC spdlog::spdlog)
+find_package(GTest REQUIRED)
+target_link_libraries(${PROJECT_NAME}TestRunner PUBLIC gtest::gtest)
 
 #folders
 set_property(GLOBAL PROPERTY USE_FOLDERS On)   #making all cmake projects in one folder in IDE if OFF (==FALSE)
