@@ -2,7 +2,7 @@
 cmake_minimum_required(VERSION 3.31)
 
 #cpp options
-set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_STANDARD 23)
 
 #Common options
 project(DustEngine VERSION 1.0.0) #solution name
@@ -21,6 +21,10 @@ set(ENGINE_SOURCES
     Source/EngineConfig.h
     Source/Log/Log.h
     Source/Log/Log.cpp
+    Source/Window/GLFW/GLFWWindow.h
+    Source/Window/GLFW/GLFWWindow.cpp
+    Source/Window/GLFW/GLFWWindowManager.h
+    Source/Window/GLFW/GLFWWindowManager.cpp
 )
 
 add_library(${PROJECT_NAME}Lib ${ENGINE_SOURCES})
@@ -40,6 +44,8 @@ find_package(spdlog REQUIRED)
 target_link_libraries(${PROJECT_NAME}Lib PUBLIC spdlog::spdlog)
 find_package(GTest REQUIRED)
 target_link_libraries(${PROJECT_NAME}TestRunner PUBLIC gtest::gtest)
+find_package(glfw3 REQUIRED)
+target_link_libraries(${PROJECT_NAME}Lib PUBLIC glfw)
 
 #folders
 set_property(GLOBAL PROPERTY USE_FOLDERS On)   #making all cmake projects in one folder in IDE if OFF (==FALSE)

@@ -2,6 +2,7 @@
 
 int main()
 {
-    const Dust::Engine engine;
+    Dust::Engine engine;
+    engine.Run();
     return 0;
 }
