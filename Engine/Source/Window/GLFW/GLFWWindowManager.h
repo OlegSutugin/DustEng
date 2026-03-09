@@ -1,32 +1,27 @@
 #pragma once
-#include "GLFWWindow.h"
+#include "Window/IWindow.h"
 #include <memory>
 #include <unordered_map>
 #include <expected>
+#include "Window/IWindowManager.h"
+#include "Core/Utility.h"
 
 namespace Dust
 {
-class GLFWWindow;
-enum class WindowCreationError : uint8_t
-{
-    ManagerIsNotInitialized,
-    CreationFailed
-};
-
-class GLFWWindowManager final
+class GLFWWindowManager final : public IWindowManager, public NonCopyable
 {
 public:
     GLFWWindowManager();
-    ~GLFWWindowManager();
+    ~GLFWWindowManager() override;
 
-    void update();
-    std::expected<WindowId, WindowCreationError> createWindow(const WindowSettings& settings);
-    std::shared_ptr<GLFWWindow> getWindowById(WindowId& id) const;
-    bool areAllWindowsClosed() const;
+    void update() override;
+    std::expected<WindowId, WindowCreationError> createWindow(const WindowSettings& settings) override;
+    std::shared_ptr<IWindow> getWindowById(WindowId& id) const override;
+    bool areAllWindowsClosed() const override;
 
 private:
     bool m_initialized{false};
-    std::unordered_map<WindowId, std::shared_ptr<GLFWWindow>> m_windows;
+    std::unordered_map<WindowId, std::shared_ptr<IWindow>> m_windows;
     void cleanupClosedWindows();
     WindowId m_windowIdCounter{1};
 };

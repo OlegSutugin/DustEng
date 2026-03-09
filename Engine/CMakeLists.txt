@@ -21,6 +21,8 @@ set(ENGINE_SOURCES
     Source/EngineConfig.h
     Source/Log/Log.h
     Source/Log/Log.cpp
+    Source/Window/IWindow.h
+    Source/Window/IWindowManager.h
     Source/Window/GLFW/GLFWWindow.h
     Source/Window/GLFW/GLFWWindow.cpp
     Source/Window/GLFW/GLFWWindowManager.h
@@ -36,7 +38,9 @@ if(MSVC)
 endif()
 
 #tests
-add_executable(${PROJECT_NAME}TestRunner Tests/LogConceptsTests.cpp)
+add_executable(${PROJECT_NAME}TestRunner 
+Tests/WindowTests.cpp
+Tests/LogConceptTests.cpp)
 target_link_libraries(${PROJECT_NAME}TestRunner PUBLIC ${PROJECT_NAME}Lib)
 
 #add libraries

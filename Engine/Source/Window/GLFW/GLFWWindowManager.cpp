@@ -80,7 +80,7 @@ std::expected<WindowId, WindowCreationError> GLFWWindowManager::createWindow(con
     return id;
 }
 
-std::shared_ptr<GLFWWindow> GLFWWindowManager::getWindowById(WindowId& id) const
+std::shared_ptr<IWindow> GLFWWindowManager::getWindowById(WindowId& id) const
 {
     const auto it = m_windows.find(id);
     return it != m_windows.end() ? it->second : nullptr;
